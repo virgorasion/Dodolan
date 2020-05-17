@@ -54,12 +54,13 @@ $Request = @$_REQUEST['req'];
 // }
 
 function createKodeUser(){
-    $kode = "#USR".date("dHis");
+    $kode = "USR".date("dHis");
     return $kode;
 }
 
 function createKodeTransaksi($tipe){
-    $kode = "#TRX";
+    $kode = "TRX".strtoupper($tipe).random_int(1000,9999);
+    return $kode;
 }
 
 if ($Request == "daftar_barang") {
@@ -123,30 +124,59 @@ elseif ($Request == "tambah_satuan") {
     return $db->insert("daftar_satuan",$data);
 }
 elseif ($Request == "transaksi_pembelian") {
+    // var_dump($kode_transaksi);
+    // die();
     $kode_transaksi = createKodeTransaksi("Beli");
     $dataTransaksi = [
         "kode_user" => $_SESSION['kode_user'],
         "kode_transaksi" => $kode_transaksi,
         "tanggal" => date("Y-m-d"),
-        "total_pembelian" => $_POST['total_pembelian'],
+        "total_pembelian" => $_POST['grand_total'],
         "total_bayar" => $_POST['total_bayar'],
         "total_kurang" => $_POST['total_kurang'],
-        "catatan" => $_POST['catatan']
+        "catatan" => "kosong"
     ];
-
-    foreach ($_POST['nama'] as $key => $val) {
-        $dataDetailTransaksi = [
-            "kode_user" => $_SESSION["kode_user"],
-            "kode_transaksi" => $kode_transaksi,
-            "id_barang" => $_POST["id_barang[$key]"],
-            "harga_beli" => $_POST["harga_beli[$key]"],
-            "jumlah_barang" => $_POST["jumlah_barang[$key]"],
-            "subtotal" => $_POST["subtotal[$key]"],
-            "kode_satuan" => $_POST["kode_satuan[$key]"]
-        ];
-        $insertDetail = $db->insert("detail_transaksi_pembelian", $dataDetailTransaksi);
+    $result = $db->insert("transaksi_pembelian", $dataTransaksi);
+    foreach ($_POST['id_barang'] as $key => $val) {
+        if ($_POST["id_barang"][$key] == "undefined") {
+            $namaBarang = $_POST["nama_barang"];
+            $dataBarang = [
+                "kode_user" => $_SESSION["kode_user"],
+                "nama_barang" => $_POST["nama_barang"][$key],
+                "jumlah" => $_POST["jumlah_barang"][$key],
+                "kode_satuan" => $_POST["satuan"][$key],
+                "tanggal_restock" => date("Y-m-d"),
+                "harga_beli" => $_POST["harga_barang"][$key],
+                "harga_jual" => $_POST["total_jual"][$key]
+            ];
+            $db->insert("daftar_barang",$dataBarang);
+            $getID = $db->select("SELECT id FROM daftar_barang WHERE nama_barang LIKE '%$namaBarang%'");
+            
+            $dataDetailTransaksi = [
+                "kode_user" => $_SESSION["kode_user"],
+                "kode_transaksi" => $kode_transaksi,
+                "id_barang" => $getID,
+                "harga_beli" => $_POST["harga_beli"][$key],
+                "jumlah_barang" => $_POST["jumlah_barang"][$key],
+                "subtotal" => $_POST["subtotal"][$key],
+                "kode_satuan" => $_POST["satuan"][$key]
+            ];
+            $insertDetail = $db->insert("detail_transaksi_pembelian", $dataDetailTransaksi);
+        }else{
+            $dataDetailTransaksi = [
+                "kode_user" => $_SESSION["kode_user"],
+                "kode_transaksi" => $kode_transaksi,
+                "id_barang" => $_POST["id_barang"][$key],
+                "harga_beli" => $_POST["harga_barang"][$key],
+                "jumlah_barang" => $_POST["jumlah_barang"][$key],
+                "subtotal" => $_POST["subtotal"][$key],
+                "kode_satuan" => $_POST["satuan"][$key]
+            ];
+            $insertDetail = $db->insert("detail_transaksi_pembelian", $dataDetailTransaksi);
+            $cek = $db->query("CALL SyncPembelian('".@$_POST["id_barang"][$key]."', '".@$_SESSION["kode_user"]."', '".date("Y-m-d")."', '".@$_POST["jumlah_barang"][$key]."', '".@$_POST["harga_barang"][$key]."',@a)");
+        }
     }
-    return $db->insert("transaksi_pembelian", $dataTransaksi);
+    
 }
 elseif ($Request == "transaksi_penjualan") {
     $kode_transaksi = createKodeTransaksi("Jual");
@@ -173,4 +203,8 @@ elseif ($Request == "transaksi_penjualan") {
         $insertDetail = $db->insert("detail_transaksi_penjualan", $dataDetailTransaksi);
     }
     return $db->insert("transaksi_penjualan",$data);
+}
+elseif($Request == "logout"){
+    session_destroy();
+    header("location:../index.php");
 }

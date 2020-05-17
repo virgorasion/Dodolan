@@ -29,8 +29,8 @@
                 <div class="collapse navbar-collapse" id="navbars-rs-food">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active"><a class="nav-link" href="dashboard.php">Beranda</a></li>
-                        <li class="nav-item"><a class="nav-link" href="menu.php">Stok</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.php">Arus Modal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="stok.php">Stok</a></li>
+                        <li class="nav-item"><a class="nav-link" href="arusmodal.php">Arus Modal</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown-a"
                                 data-toggle="dropdown">Transaksi</a>
@@ -39,14 +39,7 @@
                                 <a class="dropdown-item" href="pembelian.php">Pembelian</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown-a"
-                                data-toggle="dropdown">Pengaturan</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                                <a class="dropdown-item" href="blog.php">Ganti Password</a>
-                                <a class="dropdown-item" href="blog-details.php">Log Out</a>
-                            </div>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="service/apiservices.php?req=logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
