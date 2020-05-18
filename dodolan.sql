@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2020 at 10:07 PM
+-- Generation Time: May 18, 2020 at 09:46 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -85,11 +85,11 @@ CREATE TABLE `daftar_barang` (
 --
 
 INSERT INTO `daftar_barang` (`id`, `kode_user`, `nama_barang`, `jumlah`, `kode_satuan`, `tanggal_restock`, `harga_beli`, `harga_jual`, `jumlah_terjual`) VALUES
-(18, 'USER3108001', 'Autan', 8, 7, '2020-05-18', 3500, 18364, 16),
-(19, 'USER3108001', 'Rokok Samsu', 9, 3, '2020-05-15', 4689, 16533, 14),
+(18, 'USER3108001', 'Autan', 7, 7, '2020-05-18', 5000, 18364, 22),
+(19, 'USER3108001', 'Rokok Samsu', 7, 3, '2020-05-15', 4689, 16533, 16),
 (20, 'USER3108001', 'Beras', 19, 9, '2020-05-15', 4726, 14850, 55),
 (21, 'USER3108001', 'Gula', 19, 12, '2020-05-15', 3130, 18293, 27),
-(22, 'USER3108001', 'telur', 2, 3, '2020-05-15', 9550, 14350, 35),
+(22, 'USER3108001', 'telur', 0, 3, '2020-05-15', 9550, 14350, 35),
 (23, 'USER3108001', 'gula merah', 16, 1, '2020-05-15', 5406, 17071, 48),
 (24, 'USER3108001', 'kerupuk', 8, 3, '2020-05-15', 3740, 14981, 38),
 (25, 'USER3108001', 'heirs', 10, 12, '2020-05-15', 1087, 14545, 46),
@@ -155,7 +155,8 @@ CREATE TABLE `detail_transaksi_pembelian` (
 --
 
 INSERT INTO `detail_transaksi_pembelian` (`id`, `kode_user`, `kode_transaksi`, `id_barang`, `harga_beli`, `jumlah_barang`, `subtotal`, `kode_satuan`) VALUES
-(28, 'USER3108001', 'TRXBELI9995', 18, 3500, 5, 17500, 2);
+(28, 'USER3108001', 'TRXBELI9995', 18, 3500, 5, 17500, 2),
+(29, 'USER3108001', 'TRXBELI1147', 18, 5000, 5, 25000, 7);
 
 -- --------------------------------------------------------
 
@@ -173,6 +174,15 @@ CREATE TABLE `detail_transaksi_penjualan` (
   `subtotal` int(11) NOT NULL,
   `kode_satuan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_transaksi_penjualan`
+--
+
+INSERT INTO `detail_transaksi_penjualan` (`id`, `kode_user`, `kode_transaksi`, `id_barang`, `harga_barang`, `jumlah_barang`, `subtotal`, `kode_satuan`) VALUES
+(9, 'USER3108001', 'TRXJUAL5379', 18, 18364, 1, 18364, 7),
+(10, 'USER3108001', 'TRXJUAL7804', 18, 18364, 5, 91820, 7),
+(11, 'USER3108001', 'TRXJUAL3561', 19, 16533, 2, 33066, 3);
 
 -- --------------------------------------------------------
 
@@ -198,7 +208,8 @@ CREATE TABLE `transaksi_pembelian` (
 --
 
 INSERT INTO `transaksi_pembelian` (`id`, `kode_user`, `kode_transaksi`, `tanggal`, `total_pembelian`, `tempat_pembelian`, `total_bayar`, `total_kurang`, `catatan`, `log_time`) VALUES
-(35, 'USER3108001', 'TRXBELI9995', '2020-05-18', 17500, '', 17500, 0, 'kosong', '2020-05-17 19:36:19');
+(35, 'USER3108001', 'TRXBELI9995', '2020-05-18', 17500, '', 17500, 0, 'kosong', '2020-05-17 19:36:19'),
+(36, 'USER3108001', 'TRXBELI1147', '2020-05-18', 25000, '', 25000, 0, 'kosong', '2020-05-18 14:35:50');
 
 -- --------------------------------------------------------
 
@@ -223,7 +234,10 @@ CREATE TABLE `transaksi_penjualan` (
 --
 
 INSERT INTO `transaksi_penjualan` (`id`, `kode_user`, `kode_transaksi`, `tanggal`, `total_harga`, `total_bayar`, `total_kurang`, `catatan`, `log_time`) VALUES
-(1, 'USER3108001', 'TRXJUAL1234', '2020-05-18', 40000, 40000, 0, 'kosong', '2020-05-17 19:36:28');
+(22, 'USER3108001', 'TRXJUAL5379', '2020-05-18', 18364, 18364, 0, 'Kosong', '2020-05-18 14:27:45'),
+(23, 'USER3108001', 'TRXJUAL7804', '2020-06-02', 91820, 91820, 0, 'Kosong', '2020-05-18 18:37:15'),
+(24, 'USER3108001', '#TRXJUAL1234', '2020-07-06', 40000, 40000, 0, 'kosong', '2020-05-18 18:38:53'),
+(25, 'USER3108001', 'TRXJUAL3561', '2020-05-19', 33066, 33066, 0, 'Kosong', '2020-05-18 19:05:25');
 
 -- --------------------------------------------------------
 
@@ -248,7 +262,8 @@ CREATE TABLE `user_login` (
 --
 
 INSERT INTO `user_login` (`id`, `kode_user`, `nama`, `username`, `email`, `password`, `tanggal_pembuatan`, `modal`, `token`) VALUES
-(3, 'USER3108001', 'M Nur Fauzan W', 'virgorasion', 'fauzan.widyanto@gmail.com', '$2y$10$ehYppZK8bEFIqVQUazlLveTa/f7ioso/LyxY7M7K4UlEgvz0RQuwq', '2020-05-17 19:36:44', 5000000, '');
+(3, 'USER3108001', 'M Nur Fauzan W', 'virgorasion', 'fauzan.widyanto@gmail.com', '$2y$10$ehYppZK8bEFIqVQUazlLveTa/f7ioso/LyxY7M7K4UlEgvz0RQuwq', '2020-05-17 19:36:44', 5000000, ''),
+(6, 'USR18224906', 'Fatin Zahidah M', 'fatinzm', 'fatinzahidah0@gmail.com', '$2y$10$hoVynhM93ZPuvkjgXO9jEu4yG7Gaiko3yYYKf0b9Di5Er8WTA8BJC', '2020-05-18 15:49:06', 0, NULL);
 
 --
 -- Indexes for dumped tables
@@ -333,31 +348,31 @@ ALTER TABLE `daftar_satuan`
 -- AUTO_INCREMENT for table `detail_transaksi_pembelian`
 --
 ALTER TABLE `detail_transaksi_pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `detail_transaksi_penjualan`
 --
 ALTER TABLE `detail_transaksi_penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `transaksi_pembelian`
 --
 ALTER TABLE `transaksi_pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `transaksi_penjualan`
 --
 ALTER TABLE `transaksi_penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -388,9 +403,9 @@ ALTER TABLE `detail_transaksi_pembelian`
 -- Constraints for table `detail_transaksi_penjualan`
 --
 ALTER TABLE `detail_transaksi_penjualan`
-  ADD CONSTRAINT `detail_transaksi_penjualan_ibfk_1` FOREIGN KEY (`kode_transaksi`) REFERENCES `transaksi_penjualan` (`kode_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `detail_transaksi_penjualan_ibfk_2` FOREIGN KEY (`kode_user`) REFERENCES `user_login` (`kode_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `detail_transaksi_penjualan_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `daftar_barang` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
+  ADD CONSTRAINT `detail_transaksi_penjualan_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `daftar_barang` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_transaksi_penjualan_ibfk_4` FOREIGN KEY (`kode_transaksi`) REFERENCES `transaksi_penjualan` (`kode_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `transaksi_pembelian`

@@ -3,7 +3,8 @@ include_once("_header.php");
 require_once("core/Database.php");
 session_start();
 $db = new Database();
-// $listBarang = $db->select("SELECT id,nama_barang")
+$listBarang = $db->select("SELECT a.id,a.nama_barang,a.jumlah,a.harga_jual,a.kode_satuan FROM daftar_barang a WHERE a.kode_user = '".$_SESSION['kode_user']."'");
+$listSatuan = $db->select("SELECT kode_satuan, nama_satuan FROM daftar_satuan WHERE kode_user = '".$_SESSION['kode_user']."'");
 ?>
 
 <button id="btnCollapse" class="btn btn-lg btn-danger pl-5 position-absolute"
@@ -24,7 +25,11 @@ $db = new Database();
                                     <input id="nama_barang" class="form-control" list="listBarang" name="nama_barang"
                                         placeholder="Nama Barang">
                                     <datalist id="listBarang">
-                                        <option value="Autan" label="18">
+                                        <?php foreach($listBarang as $data){ if ($data['jumlah'] == 0){?>
+                                        <option value="<?=$data['nama_barang']?> (Stock Kosong)" label="<?=$data['id']?>" jumlah="<?=$data['jumlah']?>" harga="<?=$data['harga_jual']?>" satuan="<?=$data['kode_satuan']?>" disabled="disabled">
+                                        <?php } ?>
+                                        <option value="<?=$data['nama_barang']?>" label="<?=$data['id']?>" jumlah="<?=$data['jumlah']?>" harga="<?=$data['harga_jual']?>" satuan="<?=$data['kode_satuan']?>">
+                                        <?php } ?>
                                     </datalist>
                                 </div>
                                 <div class="form-group">
@@ -35,7 +40,9 @@ $db = new Database();
                                     <input id="satuan" list="listSatuan" class="form-control" name="satuan"
                                         placeholder="Satuan Barang">
                                     <datalist id="listSatuan">
-                                        <option value="Kg" label="2">
+                                        <?php foreach($listSatuan as $data){ ?>
+                                        <option value="<?=$data['nama_satuan']?>" label="<?=$data['kode_satuan']?>">
+                                        <?php } ?>
                                     </datalist>
                                 </div>
                                 <div class="form-group">
@@ -127,6 +134,11 @@ $db = new Database();
             $("#tabTable").removeClass("col-md-8").addClass("col-md-12");
             $("#pembayaran").removeClass("col-md-13").addClass("col-md-12");
         }
+    });
+
+    $("#nama_barang").change(function(){
+        let satuan = $("#nama_barang option[value='" + $('#nama_barang').val() + "']").attr('satuan');
+        $("#satuan").val(satuan);
     });
 
     $("#submitBarang").click(function () {

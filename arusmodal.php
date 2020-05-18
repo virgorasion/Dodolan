@@ -4,8 +4,10 @@ require_once("core/Database.php");
 session_start();
 $db = new Database();
 $dataTable = $db->query("SELECT id,kode_user,kode_transaksi,tanggal,total_harga,total_bayar,total_kurang,catatan,log_time FROM transaksi_penjualan
+WHERE kode_user = '".$_SESSION['kode_user']."'
 UNION
 SELECT id,kode_user,kode_transaksi,tanggal,total_pembelian as total_harga,total_bayar,total_kurang,catatan,log_time FROM transaksi_pembelian
+WHERE kode_user = '".$_SESSION['kode_user']."'
 ORDER BY log_time");
 ?> 
 

@@ -13,33 +13,31 @@
 
 </head>
 
-<body bgcolor="#f1f1f1">
-    <div class="headregis">
-        <img src="Assets/logo.png" alt="Iki Logo" width="150" height="40" />
-        <h2>
-            <b>Register</b>
-        </h2>
+<body style="background: #A0A6AB !important;">
+    <div class="headlogin mt-5">
+        <img src="Assets/logo.png" alt="Iki Logo" width="200" height="50" />
     </div>
-    <form id="regisForm" method="post" action="service/ApiServices.php">
-        <div class="regis">
+    <form id="loginForm" method="post" action="service/apiservices.php">
+        <div class="login">
+            <h4 class="col-md-12 text-center">Daftar Baru</h4>
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name" tabindex="1"
-                        placeholder="Nama Lengkap" required data-error="Please enter your name">
+                    <input type="text" class="form-control" id="nama" name="nama" tabindex="1"
+                        placeholder="Nama Lengkap" required data-error="Please enter your email/username">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="username" name="username" tabindex="1"
-                        placeholder="Username" required data-error="Please enter your username">
+                    <input type="text" placeholder="Username" tabindex="2" id="username" class="form-control" name="username"
+                        required data-error="Please enter your password">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="email" name="email" tabindex="1"
-                        placeholder="Email" required data-error="Please enter your email">
+                    <input type="email" placeholder="Email" tabindex="2" id="email" class="form-control" name="email"
+                        data-error="Please enter your password">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
@@ -52,31 +50,29 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="password" placeholder="Konfirmasi Password" tabindex="2" id="password" class="form-control" name="password"
+                    <input type="password" placeholder="Konsirmasi Password" tabindex="2" id="konfirmasi_password" class="form-control" name="konfirmasi_password"
                         required data-error="Please enter your password">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             <div class="col-md-12 row m-0">
                 <div class="col-md-9 p-md-0">
-                    <?php if (@$_COOKIE['alert']){ ?>
-                    <span id="error" class="text-error text-danger">*<?=@$_COOKIE['alert']?>!</span>
-                    <?php } ?>
-                    <span class="text-register">*Sudah Memiliki Akun? <a href="index.php" style="text-decoration: underline !important">Masuk</a></span>
                 </div>
-                <input type="hidden" name="req" value="login">
-                <button class="btn btn-common col-md-3" tabindex="3" id="submit" type="submit">Register</button>
+                <input type="hidden" name="req" value="register">
+                <button class="btn btn-primary col-md-3" tabindex="3" id="submit" type="submit">Daftar</button>
             </div>
         </div>
     </form>
     
     <script>
-        if ($("#error").length) {
-            $(".text-register").css("display","none");
-            $(".text-error").fadeTo(2000, 500).slideUp(500, function () {
-                $(".text-register").slideToggle(500);
-            });
-        }
+        $("#submit").click(function(){
+            if ($("#password").val() != $("#konfirmasi_password").val()) {
+                alert("Password Tidak Sama");
+                $("#konfirmasi_password").focus();
+                return false;
+            }
+            $("#loginForm").submit();
+        })
     </script>
 </body>
 </html>

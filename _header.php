@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="Assets/fontawesome-free-5.12.0/css/all.min.css">
     <script src="Assets/jquery/dist/jquery.js"></script>
     <script src="Assets/bootstrap-4.4.1/js/bootstrap.min.js"></script>
+    <script src="Assets/chart.js/dist/Chart.min.js"></script>
     <script src="Assets/fontawesome-free-5.12.0/js/all.min.js"></script>
 
 </head>

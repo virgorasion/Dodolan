@@ -54,7 +54,6 @@ class Database
 
         $query = mysqli_query($this->koneksi, $sql);
         if (!$query) {
-            var_dump($query);
             $error = mysqli_error($this->koneksi)."\n".$sql;
             throw new Exception($error);
             return False;
