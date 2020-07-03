@@ -24,6 +24,7 @@ ORDER BY log_time");
       <th scope="col">Total Bayar</th>
       <th scope="col">Total Kurang</th>
       <th scope="col">Catatan</th>
+      <th scope="col">Aksi</th>
     </tr>
   </thead>
   <tbody>
@@ -35,6 +36,7 @@ ORDER BY log_time");
       <td><?=$row['total_bayar']?></td>
       <td><?=$row['total_kurang']?></td>
       <td><?=$row['catatan']?></td>
+      <td><a href="service/ApiServices.php?req=hapus&id=<?=$row['id']?>&code=<?=$row['kode_transaksi']?>"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button></a></td>
     </tr>
     <?php } ?>
   </tbody>

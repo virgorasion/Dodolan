@@ -159,6 +159,19 @@ elseif ($Request == "transaksi_penjualan") {
     }
     header("location: ../arusmodal.php");
 }
+elseif ($Request == "hapus") {
+    $id = $_GET['id'];
+    $code = $_GET['code'];
+    $cek = substr($code,3,4);
+    $table = "";
+    if ($cek == "BELI") {
+        $table = "transaksi_pembelian";
+    }else{
+        $table = "transaksi_penjualan";
+    }
+    $db->delete($table,['id'=>$id]);
+    header("location: ../arusmodal.php");
+}
 elseif($Request == "logout"){
     session_destroy();
     header("location:../index.php");

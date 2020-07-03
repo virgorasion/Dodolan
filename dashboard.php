@@ -4,7 +4,7 @@ require_once("core/Database.php");
 session_start();
 $db = new Database();
 $totalPenjualan = $db->select("SELECT count(id) as jual FROM transaksi_penjualan WHERE kode_user = '".$_SESSION['kode_user']."' AND tanggal BETWEEN '".date('Y-m-01')."' AND '".date('Y-m-t')."' ");
-$produkTerjual = $db->select("SELECT sum(a.jumlah_barang) as jumlah FROM detail_transaksi_penjualan a, transaksi_penjualan b WHERE a.kode_transaksi = b.kode_transaksi AND a.kode_user = '".$_SESSION['kode_user']."' AND b.tanggal BETWEEN '".date('Y-m-01')."' AND '".date('Y-m-t')."'");
+$produkTerjual = $db->select("SELECT sum(a.jumlah_barang) as jumlah FROM detail_transaksi_penjualan a, transaksi_penjualan b WHERE a.kode_transaksi = b.kode_transaksi AND a.kode_user = '".$_SESSION['kode_user']."'");
 $jumlahPendapatan = $db->select("SELECT sum(total_bayar) as pendapatan FROM transaksi_penjualan WHERE kode_user = '".$_SESSION['kode_user']."' AND tanggal BETWEEN '".date('Y-m-01')."' AND '".date('Y-m-t')."'");
 $totalUntung = $db->select("SELECT sum(a.subtotal - b.harga_beli * a.jumlah_barang) AS untung FROM detail_transaksi_penjualan a, daftar_barang b, transaksi_penjualan c WHERE a.kode_user = '".$_SESSION['kode_user']."' AND a.id_barang = b.id AND a.kode_transaksi = c.kode_transaksi AND c.tanggal BETWEEN '".date('Y-m-01')."' AND '".date('Y-m-t')."'");
 $dataGrafik = $db->select("SELECT COUNT(a.id) as jumlah_transaksi, SUM(b.jumlah_barang) AS jumlah_barang, SUM(a.total_bayar) AS pendapatan, sum(b.subtotal - c.harga_beli * b.jumlah_barang) AS untung, MONTHNAME(a.tanggal) AS tanggal ,(a.tanggal) as tgl
@@ -36,7 +36,7 @@ $produkTerlaris = $db->select("SELECT nama_barang, jumlah_terjual FROM daftar_ba
                         <div class="card border-primary mb-3">
                             <div class="card-body bg-primary text-light">
                                 <h5 class="card-title">Produk Terjual</h5>
-                                <h3 class="card-text"><?=$produkTerjual[0]["jumlah"]?></h3>
+                                <h3 class="card-text"><?= ($produkTerjual[0]["jumlah"])? $produkTerjual[0]["jumlah"] : "0"; ?></h3>
                             </div>
                         </div>
                     </div>
