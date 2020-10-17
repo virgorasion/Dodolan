@@ -7,7 +7,7 @@ $koneksi = new Database();
 $test = $koneksi->select("SELECT * FROM daftar_satuan");
 
 foreach($test as $data){
-    echo $data["nama_satuan"]."<br>";
+    echo "Iki Data Satuan".$data["nama_satuan"]."<br>";
 }
 
 // $test = $koneksi->insert("daftar_satuan",["nama_satuan"=>"renceng","status"=>1]);
