@@ -11,9 +11,9 @@
 <div class="awal">Belajar Jquery</div>
 
 <div class="row">
-    <button class="col-3 bg-success m-2 text-center text-white" id="Test1">Test 1</button>
-    <button class="col-3 bg-success m-2 text-center text-white" id="Test2">Test 2</button>
-    <button class="col-3 bg-success m-2 text-center text-white" id="Test3">Test 3</button>
+    <button class="col-3 bg-success m-2 text-center text-white" id="Test1">Ganti 1</button>
+    <button class="col-3 bg-success m-2 text-center text-white" id="Test2">Ganti 2</button>
+    <button class="col-3 bg-success m-2 text-center text-white" id="Test3">Ganti 3</button>
 </div>
 <div class="row">
     <div class="col-12 bg-primary" style="height:100px;display:none" id="buka1">&nbsp;</div>
