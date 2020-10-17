@@ -54,4 +54,5 @@ function dummyBarang($db)
 function createDataPembelian($db)
 {
     $dataBarang = $db->select("SELECT * FROM daftar_barang");
+    
 }
